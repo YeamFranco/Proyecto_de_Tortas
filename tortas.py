@@ -60,8 +60,8 @@ def modificar_tortas(tabla_tortas):
       while bucle:
             try:
                   ID=int(input("Cual torta desea modificar? (Elegir la torta con el numero que le corresponda, con 0 para salir):\n"))
-                  while ID < 0 or ID > indice:
-                        ID=int(input("Dato Incorrecto. Cual torta desea modificar? (Elegir la torta con el numero que le corresponda, con 0 para salir):\n"))
+                  # while ID < 0 or ID > indice:
+                  #       ID=int(input("Dato Incorrecto. Cual torta desea modificar? (Elegir la torta con el numero que le corresponda, con 0 para salir):\n"))
                         
                   if ID != 0:      
                         cursor.execute(f"SELECT * FROM {tabla_tortas} WHERE TortasID = {ID};")
