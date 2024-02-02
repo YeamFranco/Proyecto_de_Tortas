@@ -35,6 +35,7 @@ def añadir_tortas(tabla):
                   okey = False
             except:
                   print("debe ingresar dígitos")
+      
       cursor.execute(f"INSERT INTO {tabla} (TortasNombre,TortasDetalle,TortasPrecio,TortasStock) VALUES ('{nombre}','{detalle}',{precio},{stock});")
       print("----------------------------")
       print("Torta agregada a la lista")
@@ -119,30 +120,27 @@ def eliminar_tortas(base):
                   torta_id = mostrar_tortas(base)
                   print("---------------")
                   borrar = int(input("Cual torta desea eliminar? (Elegir la torta con el numero que le corresponda, con 0 para salir):\n"))
-                  while borrar < 0 or borrar > torta_id:
-                        borrar = int(input("Dato incorrecto. Cual torta desea eliminar? (Elegir la torta con el numero que le corresponda, con 0 para salir):\n"))
-                  
+
                   if borrar != 0:
                         cursor.execute(f"SELECT * FROM {base} WHERE TortasID = {borrar};")
                         df = cursor.fetchone()
-                        decision = input(f"Esta seguro de eliminar: {df[1]}? s/n: ").lower()
+                        decision = input(f"Esta seguro de eliminar: {df[0]} - {df[1]}? s/n: ").lower()
                         while decision != "s" and decision != "n":
                               print("---------------")
-                              decision = input(f"Opcion Incorrecta. Esta seguro de eliminar: {df[0]}? s/n: ").lower()
+                              decision = input(f"Opcion Incorrecta. Esta seguro de eliminar: {df[0]} - {df[1]}? s/n: ").lower()
                         
                         if decision == "s":
                               cursor.execute(f"DELETE FROM {base} WHERE TortasID = {borrar};")
                               conn.commit()
-                              print("---------------")
+                              print("----------------------------------------------------------------------")
                               print("Torta borrada de la lista.")
+                              print("----------------------------------------------------------------------")
                   else:
                         seleccion = False
             except:
                   print("---------------")
-                  print("Debe ingresar un numero...\n")
+                  print("Debe ingresar un numero correcto para eliminar...\n")
                   
-
-
 
 #Consulta para crear la tabla y sus campos
 cursor.execute("""CREATE TABLE IF NOT EXISTS Tortas (
@@ -156,6 +154,8 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS Tortas (
 
 nombre_tabla = "Tortas"
 respuesta = "1"
+
+cursor.execute("DELETE FROM Tortas WHERE TortasID=9")
 
 #menu programa
 while respuesta != "0" and respuesta != "n":
@@ -177,7 +177,7 @@ while respuesta != "0" and respuesta != "n":
             opcion = "s"
             while opcion != "n":
                   añadir_tortas(nombre_tabla)
-                  opcion = input("Agregar otra torta a la lista de venta?: ").lower()
+                  opcion = input("Agregar otra torta a la lista de venta? (s/n): ").lower()
                   while opcion != "s" and opcion != "n":
                         opcion = input(" Opcion Inconrrecta. Agregar otra torta a la lista de venta?: ").lower()
       elif respuesta == "3":
